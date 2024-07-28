@@ -50,7 +50,7 @@ const MainNavbar = () => {
                     </div>
                 ))}
                 <div className="flex flex-row justify-center items-center bg-[#182c4e]">
-                    Haiiii, syahrul :3
+                    Hai, Syahrul
                     <img className="ml-2 rounded-full w-8 aspect-square" src="/avatar-def.jpg" alt="" />
                 </div>
             </div>
