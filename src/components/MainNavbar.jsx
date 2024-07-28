@@ -35,7 +35,7 @@ const MainNavbar = () => {
                     ))}
                 </div>
                 <div className="hidden sm:flex flex-row justify-center items-center">
-                    Haiiii, syahrul :3
+                    Hai, Syahrul
                     <img className="ml-2 rounded-full w-8 aspect-square" src="/avatar-def.jpg" alt="" />
                 </div>
             </>
