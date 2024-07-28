@@ -100,7 +100,7 @@ const CourseMobisoPageLogout = () => {
                     <h1 className='text-xl font-bold mt-4'>Konten Kursus</h1>
                     <div className="flex flex-col text-sm">
                         {courseData.courses.map((item, index) => (
-                            <div className="flex flex-row p-2 py-4 border m-2 justify-between items-center rounded-md transition-colors bg-white shadow-xl group hover:border-[#2c3f5e]">
+                            <div onClick={() => showModal(<LoginModal />)} className="cursor-pointer flex flex-row p-2 py-4 border m-2 justify-between items-center rounded-md transition-colors bg-white shadow-xl group hover:border-[#2c3f5e]">
                                 <div className="">
                                     <span className='font-bold mr-1'>{index + 1}.</span>
                                     <span className='mr-1'>{item.name}
@@ -115,17 +115,17 @@ const CourseMobisoPageLogout = () => {
                     <div className={`transition-all origin-top ${extend ? 'h-fit scale-y-100' : 'h-0 scale-y-0'}`} dangerouslySetInnerHTML={{ __html: courseData.detailHtml }}>
 
                     </div>
-                    <button onClick={() => setExtend(prev => !prev)} className='rounded-md shadow-xl w-full p-2 text-black font-bold border'>Lebih Sedikit</button>
+                    <button onClick={() => setExtend(prev => !prev)} className='rounded-md shadow-xl w-full p-2 text-black font-bold border'>Lebih {extend ? 'Sedikit' : 'Banyak'}</button>
                 </div>
                 <div ref={video} className="grow-0 shrink-0 w-96">
                     <div className={`${stick ? 'fixed top-16 w-96' : ''}`}>
-                        <div className="m-4 w-full flex flex-col bg-[#ffc700] shadow-xl justify-center items-center p-6">
+                        <div className=" m-4 w-full flex flex-col bg-[#ffc700] shadow-xl justify-center items-center p-6">
                             <p className='px-4 text-center text-xs'>Dapatkan akses penuh ke semua materi course dengan harga spesial sekarang</p>
                             <p className='text-xl line-through text-red-600'>{currencyFormat.format(courseData.price)}</p>
                             <p className='text-3xl font-bold'>{currencyFormat.format(courseData.discountedPrice)}</p>
                             <div className="flex flex-row">
-                            <button onClick={() => showModal(<LoginModal />)} className='bg-[#182c4e] text-white p-3 px-4 text-sm font-bold w-full rounded-md mr-2'>Masuk</button>
-                            <button onClick={() => showModal(<RegisterModal />)} className='bg-white text-[#182c4e] p-3 px-4 text-sm font-bold w-full rounded-md ml-2'>Daftar</button>
+                                <button onClick={() => showModal(<LoginModal />)} className='bg-[#182c4e] text-white p-3 px-4 text-sm font-bold w-full rounded-md mr-2'>Masuk</button>
+                                <button onClick={() => showModal(<RegisterModal />)} className='bg-white text-[#182c4e] p-3 px-4 text-sm font-bold w-full rounded-md ml-2'>Daftar</button>
                             </div>
                         </div>
                         <div className="m-4 rounded-md p-4 w-full h-48 flex bg-[#e0e1e1] items-center justify-center">

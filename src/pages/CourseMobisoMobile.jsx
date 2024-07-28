@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import { FaLock, FaPlay } from 'react-icons/fa6'
 import { HiArrowUturnLeft } from 'react-icons/hi2'
 import currencyFormat from '../lib/currencyFormat'
+import useModal from '../hooks/useModal'
+import DetailModal from '../modals/DetailModal'
 
 const courseData = {
     courseName: 'Daftar Merek Lebih Hemat dengan Tutorial Singkat',
@@ -50,6 +52,7 @@ const courseData = {
 }
 
 const CourseMobisoMobilePage = () => {
+    const { showModal, hideModal, modal } = useModal()
     const [extend, setExtend] = useState(false)
     const [stick, setStick] = useState(false)
 
@@ -117,19 +120,19 @@ const CourseMobisoMobilePage = () => {
                         ))}
                     </div>
                     <h1 className='text-xl font-bold mt-4 mb-2'>Apa yang akan Anda Dapatkan</h1>
-                    <div className={`transition-all origin-top ${extend ? 'h-fit scale-y-100' : 'h-0 scale-y-0'}`} dangerouslySetInnerHTML={{ __html: courseData.detailHtml }}>
+                    {/* <div className={`transition-all origin-top ${extend ? 'h-fit scale-y-100' : 'h-0 scale-y-0'}`} dangerouslySetInnerHTML={{ __html: courseData.detailHtml }}>
 
-                    </div>
-                    <button onClick={() => setExtend(prev => !prev)} className='rounded-md shadow-xl w-full p-2 text-black font-bold border'>Lebih Sedikit</button>
+                    </div> */}
+                    <button onClick={() => showModal(<DetailModal detail={courseData.detailHtml}/>)} className='rounded-md shadow-xl w-full p-2 text-black font-bold border'>Lebih Banyak</button>
                 </div>
-                <div className="grow-0 shrink-0 w-96 relative">
-                    <div className="m-4 w-full flex flex-col bg-white shadow-xl justify-center items-center p-6">
+                <div className="relative p-4">
+                    <div className="w-full flex flex-col bg-white shadow-xl justify-center items-center p-6 mb-4">
                         <p className='px-4 text-center text-xs'>Dapatkan akses penuh ke semua materi course dengan harga spesial sekarang</p>
                         <p className='text-xl line-through text-red-600'>{currencyFormat.format(courseData.price)}</p>
                         <p className='text-3xl font-bold'>{currencyFormat.format(courseData.discountedPrice)}</p>
                         <button className='bg-[#ffc700] text-[#182c4e] p-2 text-sm font-bold w-full rounded-md'>Dapatkan Course Lengkap</button>
                     </div>
-                    <div className="m-4 rounded-md p-4 w-full h-48 flex bg-[#e0e1e1] items-center justify-center">
+                    <div className="rounded-md p-4 w-full h-48 flex bg-[#e0e1e1] items-center justify-center">
                         <p className='font-black text-xl text-white'>PLACEHOLDER</p>
                     </div>
                 </div>
