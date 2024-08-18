@@ -4,6 +4,7 @@ import currencyFormat from '../lib/currencyFormat'
 import useModal from '../hooks/useModal'
 import LoginModal from "../modals/LoginModal"
 import RegisterModal from '../modals/RegisterModal'
+import useBreakpoint from '../hooks/useBreakpoint'
 
 const courseData = {
     courseName: 'Daftar Merek Lebih Hemat dengan Tutorial Singkat',
@@ -53,6 +54,7 @@ const courseData = {
 
 const CourseMobisoPageLogout = () => {
     const { showModal, hideModal, modal } = useModal()
+    const { md } = useBreakpoint()
     const [extend, setExtend] = useState(false)
     const [stick, setStick] = useState(false)
 
@@ -117,9 +119,9 @@ const CourseMobisoPageLogout = () => {
                     </div>
                     <button onClick={() => setExtend(prev => !prev)} className='rounded-md shadow-xl w-full p-2 text-black font-bold border'>Lebih {extend ? 'Sedikit' : 'Banyak'}</button>
                 </div>
-                <div ref={video} className="grow-0 shrink-0 w-96">
-                    <div className={`${stick ? 'fixed top-16 w-96' : ''}`}>
-                        <div className=" m-4 w-full flex flex-col bg-[#ffc700] shadow-xl justify-center items-center p-6">
+                <div ref={video} className="grow-0 shrink-0 md:w-96">
+                    <div className={`${stick ? 'fixed top-16 md:w-96' : 'p-4 md:p-0'}`}>
+                        <div className="md:m-4 w-full flex flex-col bg-[#ffc700] shadow-xl justify-center items-center p-6">
                             <p className='px-4 text-center text-xs'>Dapatkan akses penuh ke semua materi course dengan harga spesial sekarang</p>
                             <p className='text-xl line-through text-red-600'>{currencyFormat.format(courseData.price)}</p>
                             <p className='text-3xl font-bold'>{currencyFormat.format(courseData.discountedPrice)}</p>
@@ -128,7 +130,7 @@ const CourseMobisoPageLogout = () => {
                                 <button onClick={() => showModal(<RegisterModal />)} className='bg-white text-[#182c4e] p-3 px-4 text-sm font-bold w-full rounded-md ml-2'>Daftar</button>
                             </div>
                         </div>
-                        <div className="m-4 rounded-md p-4 w-full h-48 flex bg-[#e0e1e1] items-center justify-center">
+                        <div className="md:m-4 rounded-md p-4 w-full h-48 flex bg-[#e0e1e1] items-center justify-center">
                             <p className='font-black text-xl text-white'>PLACEHOLDER</p>
                         </div>
                     </div>
