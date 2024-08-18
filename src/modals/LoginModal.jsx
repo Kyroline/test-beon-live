@@ -7,7 +7,7 @@ import RegisterModal from "./RegisterModal"
 const LoginModal = () => {
     const { showModal, hideModal, modal } = useModal()
     return (
-        <div className="flex flex-col bg-white p-2 rounded-xl z-50 w-1/2 relative py-4">
+        <div className="flex flex-col bg-white p-2 rounded-xl z-50 w-11/12 md:w-1/2 relative py-4">
             <BsXLg className='absolute right-4 top-4 w-4 h-4 cursor-pointer' onClick={() => hideModal()} />
             <div className="flex flex-col justify-center mt-4 w-full px-4">
                 <p className="font-bold text-xl text-center">Login untuk Menonton Video</p>

@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { FaLock, FaPlay } from 'react-icons/fa6'
 import { HiArrowUturnLeft } from 'react-icons/hi2'
 import currencyFormat from '../lib/currencyFormat'
+import useBreakpoint from '../hooks/useBreakpoint'
+import useModal from '../hooks/useModal'
+import DetailModal from '../modals/DetailModal'
 
 const courseData = {
     courseName: 'Daftar Merek Lebih Hemat dengan Tutorial Singkat',
@@ -51,28 +54,51 @@ const courseData = {
 
 const CourseMobisoPage = () => {
     const [extend, setExtend] = useState(false)
-    const [stick, setStick] = useState(false)
+    const [stickPlaceholder, setStickPlaceholder] = useState(false)
+    const [stickVideo, setStickVideo] = useState(false)
+    const { md } = useBreakpoint()
+    const { showModal, hideModal, modal } = useModal()
+
+    const handleDesktopScroll = () => {
+        if (placeholder.current) {
+            const rect = placeholder.current.getBoundingClientRect()
+            console.log(rect.top)
+            console.log(stickPlaceholder)
+            if (rect.top < 64 && md)
+                setStickPlaceholder(true)
+            else
+                setStickPlaceholder(false)
+        }
+    }
 
     const handleMobileVideoScroll = () => {
         if (video.current) {
             const rect = video.current.getBoundingClientRect()
-            if (rect.top < 64)
-                setStick(true)
+            console.log(rect.top)
+            if (rect.top < 64 && !md)
+                setStickVideo(true)
             else
-                setStick(false)
+                setStickVideo(false)
         }
     }
 
     const video = useRef()
+    const placeholder = useRef()
 
     useEffect(() => {
-
-        window.addEventListener("scroll", handleMobileVideoScroll)
+        if (md) {
+            window.removeEventListener("scroll", handleMobileVideoScroll)
+            window.addEventListener("scroll", handleDesktopScroll)
+        } else {
+            window.removeEventListener("scroll", handleDesktopScroll)
+            window.addEventListener("scroll", handleMobileVideoScroll)
+        }
 
         return () => {
             window.removeEventListener("scroll", handleMobileVideoScroll)
+            window.removeEventListener("scroll", handleDesktopScroll)
         }
-    }, [])
+    }, [md])
 
     return (
         <>
@@ -94,9 +120,8 @@ const CourseMobisoPage = () => {
                     <p className='text-sm'>{courseData.courseBrief}</p>
                     <div className="text-black bg-yellow-400 p-1 rounded-sm w-fit text-xs mt-1">{courseData.type}</div>
                 </div>
-                <div className={`w-full grow-0 shrink aspect-video order-first sm:order-last`}>
-                    <iframe className={`z-30 w-full aspect-video`} src={`https://www.youtube.com/embed/${courseData.youtubeId}?autoplay=1`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                    {/* hidden sm:flex */}
+                <div ref={video} className={`w-full grow-0 shrink aspect-video order-first md:order-last`}>
+                    <iframe className={`${stickVideo ? 'fixed top-16 left-0' : ''} z-30 w-full aspect-video`} src={`https://www.youtube.com/embed/${courseData.youtubeId}?autoplay=1`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
             </section>
             <section className='w-full flex flex-col sm:flex-row relative sm:px-32'>
@@ -105,32 +130,34 @@ const CourseMobisoPage = () => {
                     <div className="flex flex-col text-sm">
                         {courseData.courses.map((item, index) => (
                             <div className="flex flex-row cursor-pointer p-2 py-4 border m-2 justify-between items-center rounded-md transition-colors bg-white shadow-xl group hover:border-[#2c3f5e]">
-                            <div className="">
-                                <span className='font-bold mr-1'>{index + 1}.</span>
-                                <span className='mr-1'>{item.name}
-                                    {item.free ? <span className="ml-1 p-1 bg-red-600 text-xs text-white rounded-md">FREE</span> : null}
-                                </span>
+                                <div className="">
+                                    <span className='font-bold mr-1'>{index + 1}.</span>
+                                    <span className='mr-1'>{item.name}
+                                        {item.free ? <span className="ml-1 p-1 bg-red-600 text-xs text-white rounded-md">FREE</span> : null}
+                                    </span>
+                                </div>
+                                {item.locked ? <div className="my-auto text-right transition-colors group-hover:text-[#2c3f5e]"><FaLock /></div> : null}
+                                {item.nextToPlay ? <div className="text-white flex flex-row p-2 cursor-pointer rounded-md bg-[#2c3f5e] items-center justify-center"><FaPlay /> Putar</div> : null}
                             </div>
-                            {item.locked ? <div className="my-auto text-right transition-colors group-hover:text-[#2c3f5e]"><FaLock /></div> : null}
-                            {item.nextToPlay ? <div className="text-white flex flex-row p-2 cursor-pointer rounded-md bg-[#2c3f5e] items-center justify-center"><FaPlay /> Putar</div> : null}
-                        </div>
                         ))}
                     </div>
                     <h1 className='text-xl font-bold mt-4 mb-2'>Apa yang akan Anda Dapatkan</h1>
-                    <div className={`transition-all origin-top ${extend ? 'h-fit scale-y-100' : 'h-0 scale-y-0'}`} dangerouslySetInnerHTML={{ __html: courseData.detailHtml }}>
+                    {md ?
+                        <div className={`transition-all origin-top ${extend ? 'h-fit scale-y-100' : 'h-0 scale-y-0'}`} dangerouslySetInnerHTML={{ __html: courseData.detailHtml }}>
 
-                    </div>
-                    <button onClick={() => setExtend(prev => !prev)} className='rounded-md shadow-xl w-full p-2 text-black font-bold border'>Lebih {extend ? 'Sedikit' : 'Banyak'}</button>
+                        </div>
+                        : null}
+                    <button onClick={() => { if (md) { setExtend(prev => !prev) } else { showModal(<DetailModal detail={courseData.detailHtml} />) } }} className='rounded-md shadow-xl w-full p-2 text-black font-bold border'>Lebih {extend ? 'Sedikit' : 'Banyak'}</button>
                 </div>
-                <div ref={video}  className="grow-0 shrink-0 w-96">
-                    <div className={`${stick ? 'fixed top-16 w-96' : ''}`}>
-                        <div className="m-4 w-full flex flex-col bg-white shadow-xl justify-center items-center p-6">
+                <div ref={placeholder} className={md ? 'grow-0 shrink-0 w-96' : 'relative p-4'}>
+                    <div className={`${stickPlaceholder ? 'fixed top-16 w-96' : 'w-full'}`}>
+                        <div className={`md:m-4 w-full flex flex-col bg-white shadow-xl justify-center items-center p-6`}>
                             <p className='px-4 text-center text-xs'>Dapatkan akses penuh ke semua materi course dengan harga spesial sekarang</p>
                             <p className='text-xl line-through text-red-600'>{currencyFormat.format(courseData.price)}</p>
                             <p className='text-3xl font-bold'>{currencyFormat.format(courseData.discountedPrice)}</p>
                             <button className='bg-[#ffc700] text-[#182c4e] p-2 text-sm font-bold w-full rounded-md'>Dapatkan Course Lengkap</button>
                         </div>
-                        <div className="m-4 rounded-md p-4 w-full h-48 flex bg-[#e0e1e1] items-center justify-center">
+                        <div className={`md:m-4 rounded-md p-4 w-full h-48 flex bg-[#e0e1e1] items-center justify-center`}>
                             <p className='font-black text-xl text-white'>PLACEHOLDER</p>
                         </div>
                     </div>

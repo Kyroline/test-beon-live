@@ -14,11 +14,7 @@ const router = createBrowserRouter([
             {
                 path: 'course',
                 element: <CourseMobisoPage />
-            },
-            {
-                path: 'course/mobile',
-                element: <CourseMobisoMobilePage />
-            },
+            }
         ]
     },
     {
