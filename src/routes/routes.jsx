@@ -3,26 +3,25 @@ import CourseMobisoPage from "../pages/CourseMobiso";
 
 import MainLayout from "../layouts/MainLayout";
 import CourseMobisoPageLogout from "../pages/CourseMobisoLogout";
-import CourseMobisoMobilePage from "../pages/CourseMobisoMobile";
 import GuestLayout from "../layouts/GuestLayout";
 
 const router = createBrowserRouter([
     {
-        path: '',
+        path: 'course',
         element: <MainLayout />,
         children: [
             {
-                path: 'course',
+                path: '',
                 element: <CourseMobisoPage />
             }
         ]
     },
     {
-        path: 'guest',
+        path: '',
         element: <GuestLayout/>,
         children: [
             {
-                path: 'course',
+                path: '',
                 element: <CourseMobisoPageLogout />
             },
         ]

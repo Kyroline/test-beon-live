@@ -97,7 +97,7 @@ const CourseMobisoPageLogout = () => {
                     <div className="absolute rounded-full backdrop-blur bg-black/50 hover:bg-black p-2 px-4 flex flex-row items-center justify-center text-white cursor-pointer"><FaPlay className='mr-2' /> Tonton Video Gratis</div>
                 </div>
             </section>
-            <section className='w-full flex flex-col sm:flex-row relative sm:px-32'>
+            <section className='w-full flex flex-col sm:flex-row relative sm:px-32 px-4'>
                 <div className="grow">
                     <h1 className='text-xl font-bold mt-4'>Konten Kursus</h1>
                     <div className="flex flex-col text-sm">

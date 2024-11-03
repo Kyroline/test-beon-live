@@ -124,7 +124,7 @@ const CourseMobisoPage = () => {
                     <iframe className={`${stickVideo ? 'fixed top-16 left-0' : ''} z-30 w-full aspect-video`} src={`https://www.youtube.com/embed/${courseData.youtubeId}?autoplay=1`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
             </section>
-            <section className='w-full flex flex-col sm:flex-row relative sm:px-32'>
+            <section className='w-full flex flex-col sm:flex-row relative sm:px-32 px-4'>
                 <div className="grow">
                     <h1 className='text-xl font-bold mt-4'>Konten Kursus</h1>
                     <div className="flex flex-col text-sm">
