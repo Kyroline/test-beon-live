@@ -120,7 +120,7 @@ const CourseMobisoPage = () => {
                     <p className='text-sm'>{courseData.courseBrief}</p>
                     <div className="text-black bg-yellow-400 p-1 rounded-sm w-fit text-xs mt-1">{courseData.type}</div>
                 </div>
-                <div ref={video} className={`w-full grow-0 shrink aspect-video order-first md:order-last`}>
+                <div ref={video} className={`w-full grow-0 shrink aspect-video order-first md:order-last z-20`}>
                     <iframe className={`${stickVideo ? 'fixed top-16 left-0' : ''} z-30 w-full aspect-video`} src={`https://www.youtube.com/embed/${courseData.youtubeId}?autoplay=1`} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
             </section>
